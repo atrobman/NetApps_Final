@@ -1,0 +1,37 @@
+Cleaner user registration
+Authentication + login
+
+
+User experience workflow
+
+User comes to the front page either Login or registration. registration on success goes to login
+
+Login  <-----------+            
+(Auth)             |            
+   |               |            
+   v               |
+Home Page -> Delete Account
+(Auth)           (Auth)          
+   |
+   v                   
+Survey Page                    
+(Auth)                         
+   |
+   v
+Submission Complete Page
+(Auth)                                    
+   |
+   v
+Home Page
+(Auth)
+
+
+
+Back end
+
+Login -> Authentication     -Kevin
+Register -> Add_User        -Andrew
+Home Page -> Get_Results  -Andrew and Kevin
+Delete Account -> Delete_User - Andrew
+Submission Complete Page -> Process_Results   - We'll figure it out
+
