@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import sqlite3
 import os
 
@@ -66,9 +66,30 @@ def get_user_results():
 
 	db, cursor = db_connect()
 
-	cursor.execute('SELECT * FROM results WHERE Username=?', (username,))
+	cursor.execute('SELECT Score FROM results WHERE Username=?', (username,))
 
-	return cursor.fetchall()
+	msg = {
+		'Scores': cursor.fetchall()
+	}
+
+	return msg
+
+@app.route('/Add_Result', methods=['POST'])
+def add_user_result():
+
+	username = request.form['username']
+	score = request.form['score']
+
+	db, cursor = db_connect()
+
+	cursor.execute('SELECT * FROM users WHERE Username=?', (username,))
+
+	if len(cursor.fetchall()) < 1:
+		return 'Failure'
+
+	cursor.execute('INSERT INTO results VALUES (?, ?)', (username, score))
+	db.commit()
+	return 'Success'
 
 if __name__ == '__main__':
 
