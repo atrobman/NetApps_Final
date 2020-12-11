@@ -8,10 +8,22 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/homePage', methods=['POST', 'GET'])
+def homePage():
+    if request.method == 'POST':
+        return render_template("homepage.html")
+
+
 @app.route('/survey', methods=['POST', 'GET'])
 def survey():
     if request.method == 'POST':
         return render_template("survey.html")
+
+
+@app.route('/deleteAccount', methods=['POST', 'GET'])
+def deleteAccount():
+    if request.method == 'POST':
+        return render_template("deleteAccount.html")
 
 
 @app.route('/result', methods=['POST', 'GET'])
