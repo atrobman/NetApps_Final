@@ -4,8 +4,14 @@ app = Flask(__name__)
 
 
 @app.route('/')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/survey', methods=['POST', 'GET'])
 def survey():
-    return render_template('survey.html')
+    if request.method == 'POST':
+        return render_template("survey.html")
 
 
 @app.route('/result', methods=['POST', 'GET'])
