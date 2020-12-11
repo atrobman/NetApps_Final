@@ -18,8 +18,13 @@
           <p>By Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman</p>
         </header>
         <main>
-         <form action = "http://localhost:5000/homePage" method = "POST">
+         <form action = "http://localhost:5000/deleteAccount" method = "POST">
+          <p>Username to Delete<input type = "text" name = "deleteUsername" /></p>
+          <p>Password to Delete<input type = "password" name = "deletePassword" /></p>
             <p><input type = "submit" value = "Delete Account?" /></p>
+         </form>
+         <form action = "http://localhost:5000/homePage" method = "GET">
+          <p><input type = "submit" value = "Back to HomePage" /></p>
          </form>
         </main>
   </body>
