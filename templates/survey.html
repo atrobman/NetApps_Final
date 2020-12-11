@@ -18,13 +18,14 @@
         </header>
         <main>
           <form action = "http://localhost:5000/result" method = "POST">
-            <p>Name <input type = "text" name = "Name" /></p>
-            <p>Physics <input type = "text" name = "Physics" /></p>
-            <p>Chemistry <input type = "text" name = "chemistry" /></p>
-            <p>Maths <input type ="text" name = "Mathematics" /></p>
-            <p><input type = "submit" value = "submit" /></p>
-         </form>
-          <a href="localhost:5000/hello">Visit Hello</a> 
+            <p>Welcome to our COVID-19 Survey. Please rate the statements on a scale of 1 to 5 (1 = Not Impactful; 5 = Extremely Impactful)</p>
+            <p>1. COVID-19 has impacted my career in a negative way. <input type = "number" min="1" max ="5" value="3" name = "Q1" required/></p>
+            <p>2. COVID-19 has impacted my mental health in a negative way. <input type = "number" min="1" max ="5" name = "Q2" required/></p>
+            <p>3. COVID-19 has impacted my physical health in a negative way. <input type = "number" min="1" max ="5" name = "Q3" required/></p>
+            <p>4. COVID-19 has impacted my emotional health in a negative way. <input type = "number" min="1" max ="5" name = "Q4" required/></p>
+            <p>5. COVID-19 has increased my overall stress levels. <input type = "number" min="1" max ="5" name = "Q5" required/></p>
+            <p><input type = "submit" value = "Submit" /></p>
+         </form> 
         </main>
   </body>
 </html>
