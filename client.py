@@ -20,13 +20,18 @@ def survey():
         return render_template("survey.html")
 
 
-@app.route('/deleteAccount', methods=['POST', 'GET'])
+@app.route('/Delete', methods=['POST', 'GET'])
 def deleteAccount():
     if request.method == 'POST':
         return render_template("deleteAccount.html")
 
+@app.route('/Register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        result = request.form
+        return render_template("homepage.html", result=result)
 
-@app.route('/result', methods=['POST', 'GET'])
+@app.route('/Results', methods=['POST', 'GET'])
 def test():
     if request.method == 'POST':
         result = request.form
