@@ -69,7 +69,7 @@ def get_user_results():
 	cursor.execute('SELECT Score FROM results WHERE Username=?', (username,))
 
 	msg = {
-		'Scores': cursor.fetchall()
+		'Scores': [x[0] for x in cursor.fetchall()]
 	}
 
 	return msg
