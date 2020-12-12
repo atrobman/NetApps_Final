@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, make_response
 import requests
-
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -21,6 +21,11 @@ def homePage():
         r = requests.post(f"http://localhost:5001/Login", data={"username":request.form["Username"], "password":request.form["Password"]})
         if r.status_code == 200:
             if r.text == "Success":
+                s = requests.post(f"http://localhost:5001/Results", data={"username":request.form["Username"]})
+                if(s.status_code == 200):
+                    plt.plot(s.json()['Scores'], 'b-o')
+                    plt.ylabel("Stress Score")
+                    plt.savefig('templates/results.png')
                 resp = make_response(render_template("homepage.html"))
                 resp.set_cookie('username', request.form["Username"])
                 resp.set_cookie('password', request.form["Password"])
