@@ -3,15 +3,12 @@ import requests
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 
 import os
 import time
 
-# IMAGE_FOLDER = os.path.join('static', 'images')
-
 app = Flask(__name__)
-
-# app.config['UPLOAD_FOLDER'] = IMAGE_FOLDER
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
@@ -21,7 +18,29 @@ def login():
         resp.set_cookie('password', "", expires=0)
         return resp
     
-
+def plotResults(s):
+    new_graph_name = "default_image.png"
+    if(s.status_code == 200):
+        if(len(s.json()['Scores']) > 0):
+            avgOfScores = sum([int(x) for x in s.json()['Scores']])/len(s.json()['Scores'])
+            plt.plot(s.json()['Scores'], 'b-o', label="Scores")
+            plt.ylabel("Stress Score")
+            maxI = len(s.json()['Timestamps'])
+            plt.hlines(15, 0, max(maxI-1, 1), 'r', label="Stress Threshold")
+            plt.hlines(avgOfScores, 0, max(maxI-1, 1), 'g', label="Average Score")
+            plt.ylim(0, 25)
+            plt.xticks(rotation=30)
+            plt.title("Results Graph")
+            plt.xticks(np.arange(len(s.json()['Timestamps'])), s.json()['Timestamps'])
+            plt.legend()
+            new_graph_name = "results" + str(time.time()).replace('.', '-') + ".png"
+            for filename in os.listdir('static/'):
+                if filename.startswith('results'):  # not to remove other images
+                    os.remove('static/' + filename)
+            plt.tight_layout()
+            plt.savefig('static/' + new_graph_name)
+            plt.close()
+    return new_graph_name
 
 @app.route('/homePage', methods=['POST', 'GET'])
 def homePage():
@@ -30,15 +49,7 @@ def homePage():
         if r.status_code == 200:
             if r.text == "Success":
                 s = requests.post(f"http://localhost:5001/Results", data={"username":request.form["Username"]})
-                if(s.status_code == 200):
-                    plt.plot(s.json()['Timestamps'], s.json()['Scores'], 'b-o')
-                    plt.ylabel("Stress Score")
-                    new_graph_name = "results" + str(time.time()).replace('.', '-') + ".png"
-                    for filename in os.listdir('static/'):
-                        if filename.startswith('results'):  # not to remove other images
-                            os.remove('static/' + filename)
-                    plt.savefig('static/' + new_graph_name)
-                    plt.close()
+                new_graph_name = plotResults(s)
                 resp = make_response(render_template("homepage.html", results=new_graph_name))
                 resp.set_cookie('username', request.form["Username"])
                 resp.set_cookie('password', request.form["Password"])
@@ -48,18 +59,8 @@ def homePage():
     else:
         _username = request.cookies.get('username')
         s = requests.post(f"http://localhost:5001/Results", data={"username":_username})
-        if(s.status_code == 200):
-            plt.plot(s.json()['Scores'], 'b-o')
-            plt.ylabel("Stress Score")
-            new_graph_name = "results" + str(time.time()).replace('.', '-') + ".png"
-            for filename in os.listdir('static/'):
-                if filename.startswith('results'):  # not to remove other images
-                    os.remove('static/' + filename)
-            plt.savefig('static/' + new_graph_name)
-            plt.close()
-            return render_template("homepage.html", results=new_graph_name)
-        else:
-            return render_template("homepage.html", results="default.png")
+        new_graph_name = plotResults(s)
+        return render_template("homepage.html", results=new_graph_name)
       
 
 @app.route('/survey', methods=['POST', 'GET'])
@@ -98,7 +99,9 @@ def register():
         r = requests.post(f"http://localhost:5001/Register", data={"username":request.form["registerUsername"], "password":request.form["registerPassword"], "email":request.form["email"], "name":request.form["fullName"]})
         if r.status_code == 200:
             if r.text == "Success":
-                resp = make_response(render_template("homepage.html"))
+                s = requests.post(f"http://localhost:5001/Results", data={"username":request.form["registerUsername"]})
+                new_graph_name = plotResults(s)
+                resp = make_response(render_template("homepage.html", results=new_graph_name))
                 resp.set_cookie('username', request.form["registerUsername"])
                 resp.set_cookie('password', request.form["registerPassword"])
                 return resp
@@ -109,12 +112,12 @@ def register():
 @app.route('/Results', methods=['POST', 'GET'])
 def test():
     if request.method == 'POST':
-        result = request.form
         sumOfScores = sum([int(x) for x in request.form.values()])
         r = requests.post(f"http://localhost:5001/Add_Result", data={"username":request.cookies.get('username'), "score":sumOfScores})
         if r.status_code == 200:
             if r.text == "Success":
-                resp = make_response(render_template("result.html", result=result))
+                s = requests.post("http://localhost:5001/User_Info", data={"username":request.cookies.get('username'), "password":request.cookies.get('password')})
+                resp = make_response(render_template("result.html", result=sumOfScores, email=s.json()['Email']))
                 return resp
             else:
                 resp = make_response(render_template("login.html"))

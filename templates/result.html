@@ -11,17 +11,16 @@
    </div>
    <div class = "col-xs-10 col-sm-10 col-md-8 col-lg-8">
   <table border = 1>
-    {% for key, value in result.items() %}
-
     <tr>
-       <th> {{ key }} </th>
-       <td> {{ value }} </td>
+       <th> Score </th>
+       <td> {{ result }} </td>
     </tr>
-
-    {% endfor %}
  </table>
  <main>
-   <a target="_blank" href="mailto: email@email.com?subject=COVID-19 Stress Survey Scores&body=Email about Covid"><button type="button" class="btn btn-danger btn-xs emailtask" alt="Send an email" value="0"><span class="glyphicon glyphicon-envelope"></span></button></a> 
+   <p>Press the button below to draft an email to send your score to the Email on file</p>
+   <a target="_blank" href="mailto:{{ email }}?subject=COVID-19 Stress Survey Scores&body=You are receiving this email because you
+ or a loved one recently completed an online survey about stress due to COVID-19 and received a score of {{ result }} out of 25. This email is a reminder
+ to reach out to your loved ones or obtain help for dealing with stress in these unprecedented times."><button type="button" class="btn btn-danger btn-xs emailtask" alt="Send an email" value="0"><span class="glyphicon glyphicon-envelope"></span></button></a> 
    <form action = "http://localhost:5000/homePage" method = "GET">
      <p><input type = "submit" value = "Back to HomePage" /></p>
   </form>
