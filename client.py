@@ -1,9 +1,17 @@
 from flask import Flask, render_template, request, make_response
 import requests
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
+import os
+import time
+
+# IMAGE_FOLDER = os.path.join('static', 'images')
 
 app = Flask(__name__)
 
+# app.config['UPLOAD_FOLDER'] = IMAGE_FOLDER
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
@@ -23,17 +31,36 @@ def homePage():
             if r.text == "Success":
                 s = requests.post(f"http://localhost:5001/Results", data={"username":request.form["Username"]})
                 if(s.status_code == 200):
-                    plt.plot(s.json()['Scores'], 'b-o')
+                    plt.plot(s.json()['Timestamps'], s.json()['Scores'], 'b-o')
                     plt.ylabel("Stress Score")
-                    plt.savefig('templates/results.png')
-                resp = make_response(render_template("homepage.html"))
+                    new_graph_name = "results" + str(time.time()).replace('.', '-') + ".png"
+                    for filename in os.listdir('static/'):
+                        if filename.startswith('results'):  # not to remove other images
+                            os.remove('static/' + filename)
+                    plt.savefig('static/' + new_graph_name)
+                    plt.close()
+                resp = make_response(render_template("homepage.html", results=new_graph_name))
                 resp.set_cookie('username', request.form["Username"])
                 resp.set_cookie('password', request.form["Password"])
                 return resp
             else:
                 return render_template("login.html")
     else:
-        return render_template("homepage.html")
+        _username = request.cookies.get('username')
+        s = requests.post(f"http://localhost:5001/Results", data={"username":_username})
+        if(s.status_code == 200):
+            plt.plot(s.json()['Scores'], 'b-o')
+            plt.ylabel("Stress Score")
+            new_graph_name = "results" + str(time.time()).replace('.', '-') + ".png"
+            for filename in os.listdir('static/'):
+                if filename.startswith('results'):  # not to remove other images
+                    os.remove('static/' + filename)
+            plt.savefig('static/' + new_graph_name)
+            plt.close()
+            return render_template("homepage.html", results=new_graph_name)
+        else:
+            return render_template("homepage.html", results="default.png")
+      
 
 @app.route('/survey', methods=['POST', 'GET'])
 def survey():
