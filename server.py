@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import sqlite3
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 db_fp = 'data.db'
@@ -66,10 +67,11 @@ def get_user_results():
 
 	db, cursor = db_connect()
 
-	cursor.execute('SELECT Score FROM results WHERE Username=?', (username,))
-
+	cursor.execute('SELECT * FROM results WHERE Username=?', (username,))
+	res = cursor.fetchall()
 	msg = {
-		'Scores': [x[0] for x in cursor.fetchall()]
+		'Scores': [x[1] for x in res],
+		'Timestamps': [datetime.strptime(x[2], '%Y-%m-%d %H:%M:%S.%f') for x in res]
 	}
 
 	return msg
@@ -87,7 +89,7 @@ def add_user_result():
 	if len(cursor.fetchall()) < 1:
 		return 'Failure'
 
-	cursor.execute('INSERT INTO results VALUES (?, ?)', (username, score))
+	cursor.execute('INSERT INTO results VALUES (?, ?, ?)', (username, score, datetime.now()))
 	db.commit()
 	return 'Success'
 
@@ -101,7 +103,7 @@ if __name__ == '__main__':
 
 	if (create_table):
 		cursor.execute('CREATE TABLE users (Username text, Password text, Name text, Email text)')
-		cursor.execute('CREATE TABLE results (Username text, Score int)')
+		cursor.execute('CREATE TABLE results (Username text, Score int, Timestamp DATETIME)')
 		db.commit()
 	
 	app.run(host='0.0.0.0', port=5001, debug=True)
