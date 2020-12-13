@@ -1,5 +1,8 @@
+<!-- ECE4564 Final Project Fall 2020 -->
+<!-- Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman -->
 <!doctype html>
    <head>
+      <!-- Standard heading throughout GUI; using Bootstrap javascript for design -->
       <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width,initial-scale=1">
       <title>ECE4564 Final Project</title>
@@ -10,6 +13,7 @@
    <div class = "col-xs-1 col-sm-1 col-md-2 col-lg-2">
    </div>
    <div class = "col-xs-10 col-sm-10 col-md-8 col-lg-8">
+      <!-- Table displaying user's results score -->
   <table border = 1>
     <tr>
        <th> Score </th>
@@ -17,11 +21,15 @@
     </tr>
  </table>
  <main>
+    <!-- Interactable Email button for user -->
+    <!-- Allows the user to send an email containing specific user information from the frontend -->
    <p>Press the button below to draft an email to send your score to the Email on file</p>
    <a target="_blank" href="mailto:{{ email }}?subject=COVID-19 Stress Survey Scores&body=You are receiving this email because you
  or a loved one recently completed an online survey about stress due to COVID-19 and received a score of {{ result }} out of 25. This email is a reminder
  to reach out to your loved ones or obtain help for dealing with stress in these unprecedented times."><button type="button" class="btn btn-danger btn-xs emailtask" alt="Send an email" value="0"><span class="glyphicon glyphicon-envelope"></span></button></a> 
-   <form action = "http://localhost:5000/homePage" method = "GET">
+ <!-- Interactable form to get back to homePage -->
+   <!-- Call GET to according route to get back to homePage --> 
+ <form action = "http://localhost:5000/homePage" method = "GET">
      <p><input type = "submit" value = "Back to HomePage" /></p>
   </form>
  </main>

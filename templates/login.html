@@ -1,6 +1,9 @@
+<!-- ECE4564 Final Project Fall 2020 -->
+<!-- Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman -->
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Standard heading throughout GUI; using Bootstrap javascript for design -->
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>ECE4564 Final Project</title>
@@ -14,23 +17,29 @@
       </div>
       <div class = "col-xs-10 col-sm-10 col-md-8 col-lg-8">
         <header  class = "text-center">
+          <!-- Standard System Header -->
           <h1>COVID-19 Survey</h1>
           <p>By Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman</p>
         </header>
         <main>
-          <form action = "http://localhost:5000/homePage" method = "POST">
-            <h3>Login Here</h3>
-            <p>Username <input type = "text" name = "Username" /></p>
-            <p>Password <input type = "password" name = "Password" /></p>
-            <p><input type = "submit" value = "Log In" /></p>
-         </form><form action = "http://localhost:5000/Register" method = "POST">
+          <!-- Interactable form to go to homepage page -->
+          <!-- Call POST to according route to logging in on frontend -->
+        <form action = "http://localhost:5000/homePage" method = "POST">
+          <h3>Login Here</h3>
+          <p>Username <input type = "text" name = "Username" /></p>
+          <p>Password <input type = "password" name = "Password" /></p>
+          <p><input type = "submit" value = "Log In" /></p>
+        </form>
+          <!-- Interactable form to go to homepage page -->
+          <!-- Call POST to according route to registering user on frontend -->
+         <form action = "http://localhost:5000/Register" method = "POST">
           <h3>Register</h3>
           <p>Full Name <input type = "text" name = "fullName" /></p>
           <p>Your Email <input type = "email" name = "email" /></p>
           <p>Your Username <input type = "text" name = "registerUsername" /></p>
           <p>Your Password <input type = "password" name = "registerPassword" /></p>
           <p><input type = "submit" value = "Register" /></p>
-       </form>
+        </form>
         </main>
   </body>
 </html>

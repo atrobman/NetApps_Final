@@ -1,6 +1,9 @@
+<!-- ECE4564 Final Project Fall 2020 -->
+<!-- Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman -->
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Standard heading throughout GUI; using Bootstrap javascript for design -->
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>ECE4564 Final Project</title>
@@ -14,19 +17,27 @@
       </div>
       <div class = "col-xs-10 col-sm-10 col-md-8 col-lg-8">
         <header  class = "text-center">
+          <!-- Standard System Header -->
           <h1>COVID-19 Survey</h1>
           <p>By Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman</p>
         </header>
         <main>
+          <!-- Interactable form to go to survey page -->
+          <!-- Call GET to according route to survey on frontend -->
          <form action = "http://localhost:5000/survey" method = "GET">
             <p><input type = "submit" value = "Take Survey" /></p>
          </form>
+          <!-- Interactable form to go to delete account page -->
+          <!-- Call GET to according route to delete account on frontend -->
          <form action = "http://localhost:5000/Delete" method = "GET">
             <p><input type = "submit" value = "Delete Account" /></p>
          </form>
+          <!-- Interactable form to go to login page page -->
+          <!-- Call GET to according route to log out on frontend -->
          <form action = "http://localhost:5000/" method = "GET">
           <p><input type = "submit" value = "Log Out" /></p>
          </form>
+          <!-- Display the user's results graph -->
          <img src="{{ url_for('static', filename=results) }}" />
         </main>
   </body>

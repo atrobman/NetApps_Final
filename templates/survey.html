@@ -1,6 +1,9 @@
+<!-- ECE4564 Final Project Fall 2020 -->
+<!-- Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman -->
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Standard heading throughout GUI; using Bootstrap javascript for design -->
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>ECE4564 Final Project</title>
@@ -14,11 +17,15 @@
       </div>
       <div class = "col-xs-10 col-sm-10 col-md-8 col-lg-8">
         <header  class = "text-center">
+          <!-- Standard System Header -->
           <h1>COVID-19 Survey</h1>
           <p>By Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman</p>
         </header>
         <main>
+          <!-- Interactable form to get back to results after completing survey -->
+          <!-- Call POST to according route to submit results of survey on frontend -->
           <form action = "http://localhost:5000/Results" method = "POST">
+            <!-- Harcoded Survey -->
             <p>Welcome to our COVID-19 Survey. Please rate the statements on a scale of 1 to 5 (1 = Not Impactful; 5 = Extremely Impactful)</p>
             <p>1. COVID-19 has impacted my career in a negative way. <input type = "number" min="1" max ="5" value="1" name = "Q1" required/></p>
             <p>2. COVID-19 has impacted my mental health in a negative way. <input type = "number" min="1" max ="5" value="1" name = "Q2" required/></p>
@@ -27,6 +34,8 @@
             <p>5. COVID-19 has increased my overall stress levels. <input type = "number" min="1" max ="5" value="1" name = "Q5" required/></p>
             <p><input type = "submit" value = "Submit" /></p>
          </form> 
+          <!-- Interactable form to get back to homePage -->
+          <!-- Call GET to according route to get back to homePage --> 
          <form action = "http://localhost:5000/homePage" method = "GET">
           <p><input type = "submit" value = "Back to HomePage" /></p>
        </form> 

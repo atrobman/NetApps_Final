@@ -1,6 +1,9 @@
+<!-- ECE4564 Final Project Fall 2020 -->
+<!-- Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman -->
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Standard heading throughout GUI; using Bootstrap javascript for design -->
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>ECE4564 Final Project</title>
@@ -14,15 +17,22 @@
       </div>
       <div class = "col-xs-10 col-sm-10 col-md-8 col-lg-8">
         <header  class = "text-center">
+          <!-- Standard System Header -->
           <h1>COVID-19 Survey</h1>
           <p>By Team 02: Kevin Kleinegger, Spencer Rankin, Andrew Trobman</p>
         </header>
         <main>
+          <!-- Interactable form to delete user account -->
+          <!-- Call POST to according route to delete account on frontend -->
          <form action = "http://localhost:5000/deleteAccount" method = "POST">
+          <!-- Username to delete (Should match user's username) -->
           <p>Username to Delete<input type = "text" name = "deleteUsername" /></p>
+          <!-- Password to delete (Should match user's password) -->
           <p>Password to Delete<input type = "password" name = "deletePassword" /></p>
             <p><input type = "submit" value = "Delete Account?" /></p>
          </form>
+         <!-- Interactable form to get back to homePage -->
+          <!-- Call GET to according route to get back to homePage -->
          <form action = "http://localhost:5000/homePage" method = "GET">
           <p><input type = "submit" value = "Back to HomePage" /></p>
          </form>
