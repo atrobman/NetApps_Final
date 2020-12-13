@@ -102,7 +102,7 @@ def get_user_results():
 	res = cursor.fetchall()
 	msg = {
 		'Scores': [x[1] for x in res],
-		'Timestamps': [datetime.strptime(x[2], '%Y-%m-%d %H:%M:%S.%f') for x in res]
+		'Timestamps': [datetime.strptime(x[2], '%Y-%m-%d %H:%M:%S.%f').strftime("%m/%d/%Y") for x in res]
 	}
 
 	return msg
