@@ -93,6 +93,31 @@ def add_user_result():
 	db.commit()
 	return 'Success'
 
+@app.route('/User_Info', methods=['POST'])
+def get_user_info():
+
+	username = request.form['username']
+	password = request.form['password']
+
+	db, cursor = db_connect()
+
+	cursor.execute('SELECT * FROM users WHERE Username=? AND Password=?', (username, password))
+
+	res = cursor.fetchall()
+	msg = dict()
+
+	if len(res) < 1:
+		return msg
+	
+	res = res[0]
+	
+	msg['Username'] = res[0]
+	msg['Password'] = res[1]
+	msg['Name'] = res[2]
+	msg['Email'] = res[3]
+
+	return msg
+
 if __name__ == '__main__':
 
 	create_table = False
